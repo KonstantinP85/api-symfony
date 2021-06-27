@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
-class DataValidationException
+namespace App\Exception;
+
+class DataValidationException extends AppException
 {
 
 }

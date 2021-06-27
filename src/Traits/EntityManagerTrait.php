@@ -1,7 +1,24 @@
 <?php
 
+declare(strict_types=1);
 
-class EntityManagerTrait
+namespace App\Traits;
+
+use Doctrine\ORM\EntityManagerInterface;
+
+trait EntityManagerTrait
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    protected EntityManagerInterface $entityManager;
 
+    /**
+     * @required
+     * @param EntityManagerInterface $entityManager
+     */
+    public function setEntityManager(EntityManagerInterface $entityManager): void
+    {
+        $this->entityManager = $entityManager;
+    }
 }
