@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @Route(path="api/security")
+ * @Route(path="/api/security")
  */
 class SecurityController extends AbstractController
 {
@@ -57,6 +57,7 @@ class SecurityController extends AbstractController
         if (!$user instanceof User) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'invalid credentials');
         }
+
         return $this->json(['username' => $user->getUsername(), 'roles' => $user->getRoles()]);
     }
 
@@ -110,6 +111,7 @@ class SecurityController extends AbstractController
     public function confirmEmail(string $token, SecurityManager $manager): Response
     {
         $manager->confirmEmail($token);
+
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
@@ -162,6 +164,7 @@ class SecurityController extends AbstractController
         } catch (AppException $e) {
             throw new ApiException($e);
         }
+
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 }

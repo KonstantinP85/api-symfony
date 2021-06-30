@@ -8,6 +8,16 @@ api_controllers:
     type: annotation
     prefix: /api
 
+admin_controllers:
+    resource: ../../src/Controller/Admin/*
+    type: annotation
+    prefix: /admin
+
+admin_api_controllers:
+    resource: ../../src/Controller/Admin/Api/*
+    type: annotation
+    prefix: /admin/api
+
 kernel:
     resource: ../../src/Kernel.php
     type: annotation

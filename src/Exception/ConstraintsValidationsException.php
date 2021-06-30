@@ -10,6 +10,13 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ConstraintsValidationsException extends DataValidationException
 {
+    /**
+     * ConstraintsValidationsException constructor.
+     * @param ConstraintViolationListInterface $errors
+     * @param int $code
+     * @param string|null $message
+     * @throws \Exception
+     */
     public function __construct(
         ConstraintViolationListInterface $errors,
         int $code = Response::HTTP_BAD_REQUEST,
@@ -33,6 +40,7 @@ class ConstraintsValidationsException extends DataValidationException
                 ];
             }
         }
+
         return $result;
     }
 }

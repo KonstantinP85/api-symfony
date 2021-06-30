@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @Route(name="/users")
+ * @Route(path="/users")
  */
 class UserController extends AbstractController
 {
@@ -79,6 +79,7 @@ class UserController extends AbstractController
         } catch (AppException $e) {
             throw new ApiException($e);
         }
+
         return $this->json($client, Response::HTTP_CREATED);
     }
 }

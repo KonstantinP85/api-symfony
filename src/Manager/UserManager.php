@@ -68,6 +68,7 @@ class UserManager
             $user->setActive(false);
         }
         $this->entityManager->flush();
+
         return $user;
     }
 
@@ -81,6 +82,7 @@ class UserManager
         $user = $this->get($id);
         $user->clearLoginAttempt();
         $this->entityManager->flush();
+
         return $user;
     }
 
@@ -95,6 +97,7 @@ class UserManager
         if (!$user instanceof User) {
             throw new AppException('Auth error', Response::HTTP_UNAUTHORIZED);
         }
+
         return $user;
     }
 
@@ -122,6 +125,7 @@ class UserManager
         $user->setPassword($encoded);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
         return $user;
     }
 
@@ -168,6 +172,7 @@ class UserManager
         $emailConfirmationToken = $this->emailConfirmationTokenManager->createEmailConfirmation($user);
         $this->entityManager->flush();
         $this->mailManager->sendEmailConfirmationTokenEmail($user, $emailConfirmationToken->getToken());
+
         return $user;
     }
 }

@@ -11,7 +11,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass=EmailConfirmationTokenRepository::class)
- * @ORM\Table(name="users")
+ * @ORM\Table(name="email_confirmation_tokens")
  */
 class EmailConfirmationToken
 {
@@ -57,6 +57,7 @@ class EmailConfirmationToken
     {
         $this->id = Uuid::uuid4()->toString();
         $this->user = $user;
+        $this->token = md5(uniqid('', true));
         $now = new \DateTimeImmutable();
         $this->createTime = $now;
         $this->expireTime = $now->modify("+ " . self::EMAIL_CONFIRMATION_TOKEN_LIFETIME . " seconds");
