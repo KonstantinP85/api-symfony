@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -97,6 +99,12 @@ class User implements UserInterface
     private \DateTimeImmutable $updateTime;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="user")
+     */
+    private Collection $bookings;
+
+    /**
      * User constructor.
      * @param string $firstName
      * @param string $lastName
@@ -124,6 +132,7 @@ class User implements UserInterface
         $this->active = false;
         $this->password = '';
         $this->loginAttemptCounter = 0;
+        $this->bookings = new ArrayCollection();
         $date = new \DateTimeImmutable();
         $this->createTime = $date;
         $this->updateTime = $date;
@@ -351,5 +360,38 @@ class User implements UserInterface
     public function eraseCredentials(): void
     {
 
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    /**
+     * @param Booking $booking
+     */
+    public function addBooking(Booking $booking): void
+    {
+        if ($this->bookings->contains($booking)) {
+            return;
+        }
+
+        $this->bookings->add($booking);
+        $booking->setUser($this);
+    }
+
+    /**
+     * @param Booking $booking
+     */
+    public function removeBooking(Booking $booking): void
+    {
+        if (!$this->bookings->contains($booking)) {
+            return;
+        }
+
+        $this->bookings->removeElement($booking);
     }
 }
