@@ -23,6 +23,7 @@ trait UserTokenStorageTrait
     }
 
     /**
+     * @required
      * @return User|null
      */
     public function getLoggedInUser(): ?User

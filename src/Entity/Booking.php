@@ -25,13 +25,13 @@ class Booking
 
     /**
      * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="bookings")
-     * @ORM\JoinColumn(name="hotel_id, referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="hotel_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private Hotel $hotel;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
-     * @ORM\JoinColumn(name="user_id, referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private User $user;
 
