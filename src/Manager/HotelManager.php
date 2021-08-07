@@ -61,19 +61,19 @@ class HotelManager
     }
 
     /**
-     * @param array $filters
+     * @param array<string, string> $filters
      * @return HotelsSearchResultModel
      * @throws AppException
      */
     public function search(array $filters): HotelsSearchResultModel
     {
         try {
-            $total =
-            $hotels =
+            $total = 5;
+            $hotels = $this->hotelRepository->searchHotelsList($filters);
 
             return new HotelsSearchResultModel($total, $hotels);
         } catch (UnexpectedResultException $e) {
-            throw new AppException($e->getMessage(), Response::HTTP_BAD_REQUEST, $e)
+            throw new AppException($e->getMessage(), Response::HTTP_BAD_REQUEST, $e);
         }
     }
 }

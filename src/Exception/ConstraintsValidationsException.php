@@ -11,7 +11,6 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 class ConstraintsValidationsException extends DataValidationException
 {
     /**
-     * ConstraintsValidationsException constructor.
      * @param ConstraintViolationListInterface $errors
      * @param int $code
      * @param string|null $message

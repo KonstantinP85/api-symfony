@@ -195,6 +195,10 @@ class UserAuthenticator extends AbstractGuardAuthenticator implements PasswordAu
         return $credentials['password'];
     }
 
+    /**
+     * @param $request
+     * @return array
+     */
     public function fetchCredentials($request): array
     {
         return json_decode($request->getContent(), true) ?? [];
