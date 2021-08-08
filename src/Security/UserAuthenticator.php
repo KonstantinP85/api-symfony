@@ -101,6 +101,7 @@ class UserAuthenticator extends AbstractGuardAuthenticator implements PasswordAu
     {
         $credentials = $this->fetchCredentials($request);
         $request->getSession()->set(Security::LAST_USERNAME, $credentials['username']);
+
         return $credentials;
     }
 
@@ -113,11 +114,10 @@ class UserAuthenticator extends AbstractGuardAuthenticator implements PasswordAu
     public function getUser($credentials, UserProviderInterface $userProvider): User
     {
         $user = $this->userRepository->loadUserByUserName($credentials['username']);
-        if (!$user instanceof User) {
-            throw new CustomUserMessageAuthenticationException('User could not be found');
-        } elseif (!$user->isActive()) {
-            throw new CustomUserMessageAuthenticationException('User was deactivated. Contact admin');
+        if (!$user instanceof User || !$user->isActive()) {
+            throw new CustomUserMessageAuthenticationException('Incorrect password or login');
         }
+
         return $user;
     }
 
@@ -167,8 +167,10 @@ class UserAuthenticator extends AbstractGuardAuthenticator implements PasswordAu
     ): ?Response {
         $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
         if ($targetPath === null) {
-            /**@var User $user */
             $user = $token->getUser();
+            if (!$user instanceof User) {
+                throw new CustomUserMessageAuthenticationException('Incorrect password or login');
+            }
             $userId = $user->getId();
             $this->userManager->clearUserLoginAttempts($userId);
 
@@ -196,10 +198,10 @@ class UserAuthenticator extends AbstractGuardAuthenticator implements PasswordAu
     }
 
     /**
-     * @param $request
+     * @param Request $request
      * @return array
      */
-    public function fetchCredentials($request): array
+    public function fetchCredentials(Request $request): array
     {
         return json_decode($request->getContent(), true) ?? [];
     }
