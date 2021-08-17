@@ -68,8 +68,8 @@ class HotelManager
     public function search(array $filters): HotelsSearchResultModel
     {
         try {
-            $total = 5;
             $hotels = $this->hotelRepository->searchHotelsList($filters);
+            $total = count($hotels);
 
             return new HotelsSearchResultModel($total, $hotels);
         } catch (UnexpectedResultException $e) {

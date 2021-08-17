@@ -7,6 +7,7 @@ namespace App\Manager;
 use App\Entity\Booking;
 use App\Exception\AppException;
 use App\Exception\DateTimeException;
+use App\Repository\BookingRepository;
 use App\Traits\EntityManagerTrait;
 use App\Traits\UserTokenStorageTrait;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,12 +23,18 @@ class BookingManager
     private HotelManager $hotelManager;
 
     /**
-     * BookingManager constructor.
-     * @param HotelManager $hotelManager
+     * @var BookingRepository
      */
-    public function __construct(HotelManager $hotelManager)
+    private BookingRepository $bookingRepository;
+
+    /**
+     * @param HotelManager $hotelManager
+     * @param BookingRepository $bookingRepository
+     */
+    public function __construct(HotelManager $hotelManager, BookingRepository $bookingRepository)
     {
         $this->hotelManager = $hotelManager;
+        $this->bookingRepository = $bookingRepository;
     }
 
     /**
@@ -49,6 +56,21 @@ class BookingManager
 
         $this->entityManager->persist($booking);
         $this->entityManager->flush();
+
+        return $booking;
+    }
+
+    /**
+     * @param string $bookingId
+     * @return Booking
+     * @throws AppException
+     */
+    public function get(string $bookingId): Booking
+    {
+        $booking = $this->bookingRepository->find($bookingId);
+        if (!$booking instanceof Booking) {
+            throw new AppException('Booking is not found', Response::HTTP_NOT_FOUND);
+        }
 
         return $booking;
     }

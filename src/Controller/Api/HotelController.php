@@ -67,7 +67,7 @@ class HotelController extends AbstractController
      * @return JsonResponse
      * @throws AppException
      */
-    public function getList(Request $request, HotelManager $manager): JsonResponse
+    public function listAction(Request $request, HotelManager $manager): JsonResponse
     {
         try {
             $filters = $request->query->all();
@@ -77,5 +77,51 @@ class HotelController extends AbstractController
         }
 
         return $this->json($hotelsList, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route(path="/{id}", methods={"GET"}, name="app_user_hotels_get_details")
+     * @OA\Get(
+     *     tags={"Hotels"},
+     *     summary="Hotel details",
+     *     description="Show hotel details",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id hotel",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="string", example="id"),
+     *             @OA\Property(property="name", type="string", example="Resort"),
+     *             @OA\Property(property="description", type="string", example="Short description"),
+     *             @OA\Property(property="costOneDay", type="string", example="1200"),
+     *             @OA\Property(property="address", type="string", example="Street")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Hotel not found"
+     *     )
+     * )
+     * @param string $id
+     * @param HotelManager $manager
+     * @return JsonResponse
+     */
+    public function detailsAction(string $id, HotelManager $manager): JsonResponse
+    {
+        try {
+            $hotel = $manager->get($id);
+        } catch (AppException $e) {
+            throw new ApiException($e);
+        }
+
+        return $this->json($hotel, Response::HTTP_OK);
     }
 }

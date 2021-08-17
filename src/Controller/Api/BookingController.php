@@ -33,10 +33,9 @@ class BookingController extends  AbstractController
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 type="object",
-     *                 @OA\Property(property="name", description="Name", type="string"),
-     *                 @OA\Property(property="description", description="Description", type="string"),
-     *                 @OA\Property(property="costOneDay", description="Cost one day", type="integer"),
-     *                 @OA\Property(property="address", description="Address", type="string")
+     *                 @OA\Property(property="hotelId", description="Hotel", type="string"),
+     *                 @OA\Property(property="arrivalTime", description="Arrival time", type="string"),
+     *                 @OA\Property(property="duration", description="Duration", type="integer")
      *              )
      *          )
      *      ),
@@ -74,5 +73,50 @@ class BookingController extends  AbstractController
         }
 
         return $this->json($hotel, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @Route(path="/{id}", methods={"GET"}, name="app_user_booking_get_details")
+     * @OA\Get(
+     *     tags={"User bookings"},
+     *     summary="Booking details",
+     *     description="Show booking details",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id booking",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="hotel", type="object"),
+     *             @OA\Property(property="arrivalTime", type="string", example="12.09.2021 14:00:00"),
+     *             @OA\Property(property="duration", type="string", example="11"),
+     *             @OA\Property(property="status", type="string", example="new")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Booking is not found"
+     *     )
+     * )
+     * @param string $id
+     * @param BookingManager $manager
+     * @return JsonResponse
+     */
+    public function detailsAction(string $id, BookingManager $manager): JsonResponse
+    {
+        try {
+            $booking = $manager->get($id);
+        } catch (AppException $e) {
+            throw new ApiException($e);
+        }
+
+        return $this->json($booking, Response::HTTP_OK);
     }
 }
