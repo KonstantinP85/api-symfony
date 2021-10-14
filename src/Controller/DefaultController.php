@@ -12,7 +12,6 @@ class DefaultController extends AbstractController
 {
     /**
      * @Route(path="/front", methods={"GET"}, name="app_front_default_index")
-     *
      */
     public function index(): Response
     {

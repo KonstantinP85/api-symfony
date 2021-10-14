@@ -6,7 +6,7 @@ namespace App\Exception;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class DataValidationException extends AppException
+class DataValidationException extends AppException implements SeveralErrorsExceptionInterface
 {
     /**
      * @var array
@@ -14,7 +14,6 @@ class DataValidationException extends AppException
     protected array $errors;
 
     /**
-     * DataValidationException constructor.
      * @param array $errors
      * @param int $code
      * @param string|null $message

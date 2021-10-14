@@ -27,3 +27,7 @@ services:
         class: Predis\Client
         arguments:
             - { host: '%env(REDIS_HOST)%' }
+
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

@@ -25,6 +25,12 @@ class ApiException extends HttpException
             $exception->getMessage(),
             $exception
         );
+
+        if ($exception instanceof SeveralErrorsExceptionInterface) {
+            $this->errors = $exception->getErrors();
+        } else {
+            $this->errors = [];
+        }
     }
 
     public function getErrors(): array

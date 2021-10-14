@@ -45,7 +45,15 @@ class UserController extends AbstractController
      *      ),
      *     @OA\Response(
      *         response="201",
-     *         description="Created"
+     *         description="Created",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="id", type="string", example="0880b77e-a440-46a2-8fe3-1c196eaaad3f"),
+     *              @OA\Property(property="firstName", type="string", example="jack"),
+     *              @OA\Property(property="lastName", type="string", example="jones"),
+     *              @OA\Property(property="patronymic", type="string", example=""),
+     *              @OA\Property(property="email", type="string", example="test@test.ru"),
+     *              @OA\Property(property="phone", type="string", example="89990001212")
+     *         )
      *     ),
      *     @OA\Response(
      *         response="400",
