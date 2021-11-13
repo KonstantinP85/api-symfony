@@ -12,12 +12,13 @@ trait UserTokenStorageTrait
     /**
      * @var Security
      */
-    protected Security $security;
+    public Security $security;
 
     /**
+     * @required
      * @param Security $security
      */
-    public function __construct(Security $security)
+    public function setSecurity(Security $security): void
     {
         $this->security = $security;
     }
@@ -28,10 +29,11 @@ trait UserTokenStorageTrait
      */
     public function getLoggedInUser(): ?User
     {
-        $user = $this->security->getUser();
+        $user = $this->security->getToken()->getUser();
         if ($user instanceof User) {
             return $user;
         }
+
         return null;
     }
 }

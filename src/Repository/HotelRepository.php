@@ -11,7 +11,6 @@ use Doctrine\Persistence\ManagerRegistry;
 class HotelRepository extends ServiceEntityRepository
 {
     /**
-     * HotelRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)

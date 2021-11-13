@@ -28,6 +28,11 @@ class BookingManager
     private BookingRepository $bookingRepository;
 
     /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
+
+    /**
      * @param HotelManager $hotelManager
      * @param BookingRepository $bookingRepository
      */
@@ -48,7 +53,7 @@ class BookingManager
     {
         $user = $this->getLoggedInUser();
         $hotel = $this->hotelManager->get($hotelId);
-        $arrivalTime = \DateTimeImmutable::createFromFormat($arrivalTime, 'd.m.Y H:i:s');
+        $arrivalTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $arrivalTime);
         if ($arrivalTime === false) {
             throw new DateTimeException('Not correct date format', Response::HTTP_BAD_REQUEST);
         }

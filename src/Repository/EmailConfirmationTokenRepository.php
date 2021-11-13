@@ -10,6 +10,9 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class EmailConfirmationTokenRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);

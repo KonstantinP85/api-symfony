@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Repository\BookingRepository;
 use App\DataProvider\BookingDataProvider;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -66,7 +68,12 @@ class Booking
     private \DateTimeImmutable $updateTime;
 
     /**
-     * Booking constructor.
+     * @var Collection
+     * @ORM\OneToMany(targetEntity=BookingHistory::class, mappedBy="booking")
+     */
+    private Collection $history;
+
+    /**
      * @param Hotel $hotel
      * @param User $user
      * @param \DateTimeImmutable $arrivalTime
@@ -76,15 +83,14 @@ class Booking
     {
         $this->id = Uuid::uuid4()->toString();
         $this->hotel = $hotel;
-        $hotel->addBooking($this);
         $this->user = $user;
-        $user->addBooking($this);
         $this->arrivalTime = $arrivalTime;
         $this->duration = $duration;
         $this->status = BookingDataProvider::BOOKING_STATUS_NEW;
         $date = new \DateTimeImmutable();
         $this->createTime = $date;
         $this->updateTime = $date;
+        $this->history = new ArrayCollection();
     }
 
     /**
@@ -207,5 +213,37 @@ class Booking
     public function getUpdateTime(): \DateTimeImmutable
     {
         return $this->updateTime;
+    }
+
+    /**
+     * @return Collection|BookingHistory[]
+     */
+    public function getHistory(): Collection
+    {
+        return $this->history;
+    }
+
+    /**
+     * @param BookingHistory $bookingHistory
+     */
+    public function addBookingHistory(BookingHistory $bookingHistory): void
+    {
+        if ($this->history->contains($bookingHistory)) {
+            return;
+        }
+
+        $this->history->removeElement($bookingHistory);
+    }
+
+    /**
+     * @param BookingHistory $bookingHistory
+     */
+    public function removeBookingHistory(BookingHistory $bookingHistory): void
+    {
+        if ($this->history->contains($bookingHistory)) {
+            return;
+        }
+
+        $this->history->removeElement($bookingHistory);
     }
 }
