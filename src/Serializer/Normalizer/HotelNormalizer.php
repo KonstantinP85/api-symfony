@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Serializer\Normalizer;
 
-use App\Entity\BookingHistory;
+use App\Entity\Hotel;
 
-class BookingHistoryNormalizer extends AbstractCustomNormalizer
+class HotelNormalizer extends AbstractCustomNormalizer
 {
-    public const CONTEXT_TYPE_KEY = 'booking_history';
+    public const CONTEXT_TYPE_KEY = 'hotel';
     public const TYPE_LIST = 'list';
-    public const TYPE_IN_BOOKING = 'in_booking';
 
     /**
-     * @param BookingHistory $object
+     * @param Hotel $object
      * @param string|null $format
      * @param array $context
      * @return array
@@ -21,23 +20,25 @@ class BookingHistoryNormalizer extends AbstractCustomNormalizer
     public function normalize($object, string $format = null, array $context = []): array
     {
         switch ($this->getType($context)) {
-            case self::TYPE_IN_BOOKING:
+            case static::TYPE_LIST:
                 $result = [
                     'id' => $object->getId(),
-                    'createTime' => $object->getCreateTime()->format('Y-m-d H:i:s'),
-                    'who' => $object->getWho(),
-                    'newValue' => $object->getNewValue()
+                    'name' => $object->getName(),
+                    'address' => $object->getAddress()
                 ];
                 break;
             default:
                 $result = [
                     'id' => $object->getId(),
-                    'createTime' => $object->getCreateTime()->format('Y-m-d H:i:s'),
-                    'who' => $object->getWho(),
-                    'newValue' => $object->getNewValue(),
-                    'booking' => $object->getBooking()->getId()
+                    'name' => $object->getName(),
+                    'description' => $object->getDescription(),
+                    'address' => $object->getAddress(),
+                    'cost_one_day' => $object->getCostOneDay(),
+                    'create_time' => $object->getCreateTime()->format('Y-m-d H:i:s'),
+                    'update_time' => $object->getUpdateTime()->format('Y-m-d H:i:s')
                 ];
         }
+
         return $result;
     }
 
@@ -48,6 +49,6 @@ class BookingHistoryNormalizer extends AbstractCustomNormalizer
      */
     public function supportsNormalization($data, string $format = null): bool
     {
-        return $data instanceof BookingHistory;
+        return $data instanceof Hotel;
     }
 }

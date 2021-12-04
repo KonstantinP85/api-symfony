@@ -7,6 +7,7 @@ namespace App\Controller\Api;
 use App\Exception\ApiException;
 use App\Exception\AppException;
 use App\Manager\HotelManager;
+use App\Serializer\Normalizer\HotelNormalizer;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -65,18 +66,17 @@ class HotelController extends AbstractController
      * @param Request $request
      * @param HotelManager $manager
      * @return JsonResponse
-     * @throws AppException
      */
     public function listAction(Request $request, HotelManager $manager): JsonResponse
     {
         try {
             $filters = $request->query->all();
             $hotelsList = $manager->search($filters);
-        } catch (ApiException $e) {
+        } catch (AppException $e) {
             throw new ApiException($e);
         }
 
-        return $this->json($hotelsList, Response::HTTP_OK);
+        return $this->json($hotelsList, Response::HTTP_OK, [], [HotelNormalizer::CONTEXT_TYPE_KEY => HotelNormalizer::TYPE_LIST]);
     }
 
     /**
