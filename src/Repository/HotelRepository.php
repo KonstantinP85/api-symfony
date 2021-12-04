@@ -19,7 +19,7 @@ class HotelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array<string, string> $filters
+     * @param array $filters
      * @return array|Hotel[]
      */
     public function searchHotelsList(array $filters): array

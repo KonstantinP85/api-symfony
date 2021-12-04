@@ -12,7 +12,7 @@ class BookingNormalizer extends AbstractCustomNormalizer
     public const TYPE_LIST = 'list';
 
     /**
-     * @param Booking $object
+     * @param $object
      * @param string|null $format
      * @param array $context
      * @return array
@@ -29,7 +29,7 @@ class BookingNormalizer extends AbstractCustomNormalizer
                         $format,
                         [UserNormalizer::CONTEXT_TYPE_KEY => UserNormalizer::TYPE_IN_BOOKING]
                     ),
-                    'arrivalTime' => $object->getArrivalTime()->format('Y-m-d H:i:s'),
+                    'arrival_time' => $object->getArrivalTime()->format('Y-m-d H:i:s'),
                     'duration' => $object->getDuration(),
                     'status' => $object->getStatus(),
                 ];
@@ -43,13 +43,13 @@ class BookingNormalizer extends AbstractCustomNormalizer
                         $format,
                         [UserNormalizer::CONTEXT_TYPE_KEY => UserNormalizer::TYPE_IN_BOOKING]
                     ),
-                    'arrivalTime' => $object->getArrivalTime()->format('Y-m-d H:i:s'),
+                    'arrival_time' => $object->getArrivalTime()->format('Y-m-d H:i:s'),
                     'duration' => $object->getDuration(),
                     'status' => $object->getStatus(),
-                    'createTime' => $object->getCreateTime()->format('Y-m-d H:i:s'),
-                    'updateTime' => $object->getUpdateTime()->format('Y-m-d H:i:s'),
-                    'bookingHistory' => $this->normalizer->normalize(
-                        $object->getUser(),
+                    'create_time' => $object->getCreateTime()->format('Y-m-d H:i:s'),
+                    'update_time' => $object->getUpdateTime()->format('Y-m-d H:i:s'),
+                    'booking_history' => $this->normalizer->normalize(
+                        $object->getHistory(),
                         $format,
                         [BookingHistoryNormalizer::CONTEXT_TYPE_KEY => BookingHistoryNormalizer::TYPE_IN_BOOKING]
                     ),

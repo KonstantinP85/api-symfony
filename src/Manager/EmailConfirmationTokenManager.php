@@ -22,7 +22,6 @@ class EmailConfirmationTokenManager
     private EmailConfirmationTokenRepository $repository;
 
     /**
-     * EmailConfirmationTokenManager constructor.
      * @param EmailConfirmationTokenRepository $repository
      */
     public  function __construct(EmailConfirmationTokenRepository $repository)

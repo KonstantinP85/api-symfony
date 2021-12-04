@@ -37,7 +37,6 @@ class UserManager
     private EmailConfirmationTokenManager $emailConfirmationTokenManager;
 
     /**
-     * UserAuthenticator constructor.
      * @param UserRepository $userRepository
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param MailManager $mailManager
