@@ -27,7 +27,6 @@ class SecurityManager
     private UserPasswordEncoderInterface $passwordEncoder;
 
     /**
-     * SecurityManager constructor.
      * @param EmailConfirmationTokenManager $emailConfirmationTokenManager
      * @param UserPasswordEncoderInterface $passwordEncoder
      */

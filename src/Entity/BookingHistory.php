@@ -54,6 +54,7 @@ class BookingHistory
     {
         $this->id = Uuid::uuid4()->toString();
         $this->booking = $booking;
+        $booking->addBookingHistory($this);
         $this->who = $who;
         $this->newValue = $newValue;
         $this->createTime = new \DateTimeImmutable();

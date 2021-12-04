@@ -232,7 +232,8 @@ class Booking
             return;
         }
 
-        $this->history->removeElement($bookingHistory);
+        $this->history->add($bookingHistory);
+        $bookingHistory->setBooking($this);
     }
 
     /**

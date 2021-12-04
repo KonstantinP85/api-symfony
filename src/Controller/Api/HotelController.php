@@ -117,7 +117,7 @@ class HotelController extends AbstractController
     public function detailsAction(string $id, HotelManager $manager): JsonResponse
     {
         try {
-            $hotel = $manager->get($id);
+            $hotel = $manager->getDetails($id);
         } catch (AppException $e) {
             throw new ApiException($e);
         }

@@ -17,7 +17,6 @@ class HotelsSearchResultModel
     public array $hotels;
 
     /**
-     * HotelsSearchResultModel constructor.
      * @param int $total
      * @param array $hotels
      */
